@@ -12,8 +12,8 @@ type Config struct {
 
 type DB struct {
 	Driver   string `envconfig:"DB_DRIVER" default:"postgres"`
-	User     string `envconfig:"DB_USER" default:"postgres"`
-	Password string `envconfig:"DB_PASSWORD" default:"postgres"`
+	User     string `envconfig:"DB_USER" default:"postgres_user"`
+	Password string `envconfig:"DB_PASSWORD" default:"postgres_password"`
 	Host     string `envconfig:"DB_HOST" default:"localhost"`
 	Port     string `envconfig:"DB_PORT" default:"5432"`
 	Name     string `envconfig:"DB_NAME" default:"develop"`

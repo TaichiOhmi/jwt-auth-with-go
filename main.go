@@ -1,21 +1,22 @@
 package main
 
 import (
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
+	"log"
+	"os"
 
-	"github.com/TaichiOhmi/jwt-auth-with-goreact/app/database"
-	"github.com/TaichiOhmi/jwt-auth-with-goreact/app/routes"
+	"github.com/spf13/cobra"
+
+	"github.com/TaichiOhmi/jwt-auth-with-goreact/app/cmd"
 )
 
 func main() {
-	database.Connect()
+	c := &cobra.Command{Use: "select mode"}
 
-	app := fiber.New()
-	app.Use(cors.New(cors.Config{
-		AllowCredentials: true,
-	}))
-	routes.Setup(app)
-
-	app.Listen("localhost:8080")
+	cmd.RegisterComannd(c)
+	err := c.Execute()
+	if err != nil {
+		log.Printf(err.Error())
+		os.Exit(1)
+	}
+	os.Exit(0)
 }

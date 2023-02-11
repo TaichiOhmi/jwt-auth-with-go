@@ -20,5 +20,9 @@ func Connect() {
 		panic(fmt.Sprintf("could not connect to the database, %s", err))
 	}
 	DB = conn
-	conn.AutoMigrate(&domain.User{})
+	err = conn.AutoMigrate(&domain.User{})
+	if err != nil {
+		fmt.Errorf(err.Error())
+		return
+	}
 }

@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   postgresql:
-    container_name: ${DB_HOST}
+    container_name: postgresql
     image: postgres:15.1-alpine
     ports:
       - ${DB_PORT}:5432
@@ -13,25 +13,23 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_INITDB_ARGS: '--encoding=UTF-8'
-    hostname: postgres
-    user: postgres
     build:
       context: .
-      dockerfile: docker/postgresql/Dockerfile
+      dockerfile: ./docker/postgresql/Dockerfile
   app:
-    container_name: app
-    environment:
-      - GOPATH=/go
-      - DB_HOST=postgresql
-      - SERVER_HOST=localhost
+    container_name: ${APP_CONTAINER_NAME}
     build:
       context: .
       dockerfile: ./Dockerfile
+    environment:
+      - GOPATH=/go
+      - DB_HOST=postgresql
+      - SERVER_HOST=0.0.0.0
     volumes:
       - .:/app
       - .env:/app/.env
     ports:
-      - '8000:8080'
+      - ${APP_PORT}:8080
     tty: true
     depends_on:
       - postgresql

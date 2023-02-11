@@ -9,4 +9,6 @@ import (
 func Setup(app *fiber.App) {
 	app.Post("/api/register", middleware.Register)
 	app.Post("/api/login", middleware.Login)
+	app.Post("/api/logout", middleware.Logout)
+	app.Get("/api/user", middleware.User)
 }
